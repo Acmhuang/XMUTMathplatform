@@ -1,8 +1,20 @@
 <template>
   <div class="container">
-  <div class="ppt">
-    <iframe src="https://ow365.cn/?i=31998&ssl=1&furl=https://image-li.oss-cn-hangzhou.aliyuncs.com/math/nine.pptx"
-            scrolling="no" frameborder="0" allowfullscreen=true width="800" height="450" ></iframe>
+<!--  <div class="ppt">-->
+<!--    <iframe src="https://ow365.cn/?i=31998&ssl=1&furl=https://image-li.oss-cn-hangzhou.aliyuncs.com/math/nine.pptx"-->
+<!--            scrolling="no" frameborder="0" allowfullscreen=true width="800" height="450" ></iframe>-->
+<!--  </div>-->
+  <div class="pythoncode">
+    <el-button type="primary" icon="el-icon-circle-check-outline" @click="handleConfirm" round>
+      点击保存
+    </el-button>
+    <el-button icon="el-icon-caret-right" type="info" @click="handleRunCode" round>
+      在线运行
+    </el-button>
+    <CommonEditor>
+      language="python"
+      @input="changeTextarea"
+    </CommonEditor>
   </div>
   <div class="jw-chat">
     <JwChat-index
@@ -25,7 +37,10 @@
 </template>
 
 <script>
+import CommonEditor from "@/views/CommonEditor";
+
 export default {
+  components: {CommonEditor},
   data() {
     return {
       user: {},
@@ -49,7 +64,10 @@ export default {
         }
       },
       showRightBox: false,
-      websocket: undefined
+      websocket: undefined,
+      pythonContent: {
+        pythontext: ''
+      }
     }
   },
   created() {
@@ -171,8 +189,12 @@ export default {
 
     talkEvent(play) {
       console.log(play)
-    }
-
+    },
+    changeTextarea(val) {
+      this.pythonContent.pythontext = val
+    },
+    handleConfirm() {},
+    handleRunCode() {}
   },
   mounted() {
 
@@ -185,6 +207,9 @@ export default {
   display: flex;
 }
 .ppt{
+  flex: 1;
+}
+.pythoncode{
   flex: 1;
 }
 .jw-chat {
